@@ -119,16 +119,18 @@ than take from this page alone.
 
 > **PRODUCT VERSION NOTE (as of 2026-09-15)**
 > Microsoft's entity-mapping documentation ("Map data fields to entities in Microsoft Sentinel,"
-> part of the Microsoft Sentinel documentation on Microsoft Learn) has long described a per-rule
-> cap on entity mapping built through the Azure portal's rule wizard — historically five entity
-> mappings per rule, each carrying up to three identifier fields. This book has no live tenant to
-> re-verify that cap against the current wizard, so treat "five entities, three identifiers each"
-> as this book's best-documented recollection, not a confirmed-today number — check the live rule
-> wizard or the current Learn page before designing a rule that assumes it sits exactly at the
-> limit. If the cap has since changed, note that the rule's underlying ARM template already
-> supports a JSON-based entity-mapping definition distinct from the wizard's own form fields; a
-> rule that runs out of mapping slots in the portal UI may still be extendable by editing that
-> definition directly rather than concluding the behavior can't be mapped at all.
+> part of the Microsoft Sentinel documentation on Microsoft Learn) currently documents a per-rule
+> cap on entity mapping built through the Azure portal's rule wizard — up to 10 entity mappings
+> per rule, each carrying up to three identifier fields (confirmed directly against
+> learn.microsoft.com/azure/sentinel/map-data-fields-to-entities and the "Create scheduled
+> analytics rules" page, current as of this check). This cap has moved before — this book's
+> earlier drafts recorded a five-mapping limit — so treat "10 entities, three identifiers each"
+> as current-as-checked rather than permanent, and re-confirm against the live rule wizard or the
+> current Learn page if it's been a while since this chapter's `last_validated` date. If the cap
+> has since changed again, note that the rule's underlying ARM template already supports a
+> JSON-based entity-mapping definition distinct from the wizard's own form fields; a rule that
+> runs out of mapping slots in the portal UI may still be extendable by editing that definition
+> directly rather than concluding the behavior can't be mapped at all.
 
 ---
 
