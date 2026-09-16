@@ -1,0 +1,12 @@
+A Microsoft Sentinel Operations handbook. Built for the platform team behind the query. Free. Public.
+
+A KQL query isn't a production detection. Everything between "it runs in the query editor" and "the SOC can rely on it, monitor it, and afford it" is what this book covers.
+
+From workspace architecture and the Azure-portal/Defender-portal split → data ingestion and table tiers → analytics-rule types → entity mapping and the incident model → detection-content lifecycle → automation rules and playbooks → UEBA and AI-assisted operations → Defender XDR signal convergence → cost and retention governance → tuning and troubleshooting.
+
+Inside: Log Analytics workspace design, the Azure-portal-to-Defender-portal migration (and its published March 2027 retirement date), Data Collection Rules, Analytics vs. Data lake tiers, Scheduled/NRT/Fusion/Anomaly/ML Behavior Analytics/Custom Detection rules, Content Hub and detection-as-code, workbooks, hunting, watchlists, UEBA, Security Copilot and agentic tooling, automation rules, Logic Apps playbooks, commitment-tier billing mechanics, and Sentinel-specific health monitoring.
+
+This one is honest about being a single-vendor platform-operations book, not a detection-engineering curriculum — it's a companion volume to The Detection Engineering Handbook, picking up exactly where that book's KQL chapter leaves off. And there's no lab tenant behind it: every platform fact carries a dated citation back to one of 43 sources — Microsoft Learn documentation, plus MITRE ATT&CK and NIST where the concept is vendor-neutral — or is labeled a conceptual sketch. Never a captured screenshot, never a validated-in-production claim presented as one.
+
+Full PDF: https://raw.githubusercontent.com/neshboy/microsoft-sentinel-operations-handbook/master/Microsoft_Sentinel_Operations.pdf
+Repo: https://github.com/neshboy/microsoft-sentinel-operations-handbook
