@@ -154,7 +154,7 @@ Every table in a workspace is billed and retained under one of two tiers, and â€
 > **PRODUCT VERSION NOTE (as of 2026-09-15)**
 > Microsoft's current documentation describes this two-tier model (Analytics tier and Data lake
 > tier) as the present retention framework, per Microsoft Learn's "Log retention tiers in Microsoft
-> Sentinel" page (learn.microsoft.com/azure/sentinel/log-plans), retrieved 2026-09-15 for this
+> Sentinel" page ([learn.microsoft.com/azure/sentinel/log-plans](https://learn.microsoft.com/azure/sentinel/log-plans)), retrieved 2026-09-15 for this
 > book. Training material and some older published guidance still circulate an earlier
 > four-tier framing (Analytics / Basic / Auxiliary / Archive) that this two-tier model has
 > superseded. If you encounter that older four-tier terminology in a vendor deck, a certification

@@ -31,7 +31,7 @@ Part 2 already established that once Sentinel is enabled on a workspace, every t
 
 > **PRODUCT VERSION NOTE (as of 2026-09-15)**
 > Microsoft Learn, "Plan costs and understand pricing and billing" for Microsoft Sentinel
-> (`learn.microsoft.com/azure/sentinel/billing`, retrieved 2026-09-15), is the authoritative
+> ([learn.microsoft.com/azure/sentinel/billing](https://learn.microsoft.com/azure/sentinel/billing), retrieved 2026-09-15), is the authoritative
 > source for exactly how ingestion and retention are metered and priced, and it changes on
 > Microsoft's own cadence — a new region rolling out different rates, a discount structure
 > changing, or a tier's default retention window shifting are all things that have happened to
@@ -42,9 +42,9 @@ Part 2 already established that once Sentinel is enabled on a workspace, every t
 ## 2. The Analytics tier
 
 **[ENGINEERING]**
-The **Analytics tier** is the tier every earlier part in this book has implicitly assumed a table lives in, because it's the tier that supports everything the rest of the platform does: full KQL querying, analytics rules (Parts 4–5), workbooks (Part 8), hunting (Part 9), UEBA (Part 11), and entity mapping into the incident model (Part 6) all run against Analytics-tier data. Its retention and cost shape, per Microsoft Learn's "Log retention tiers in Microsoft Sentinel" documentation (`learn.microsoft.com/azure/sentinel/log-plans`, retrieved 2026-09-15 for this book), is:
+The **Analytics tier** is the tier every earlier part in this book has implicitly assumed a table lives in, because it's the tier that supports everything the rest of the platform does: full KQL querying, analytics rules (Parts 4–5), workbooks (Part 8), hunting (Part 9), UEBA (Part 11), and entity mapping into the incident model (Part 6) all run against Analytics-tier data. Its retention and cost shape, per Microsoft Learn's "Log retention tiers in Microsoft Sentinel" documentation ([learn.microsoft.com/azure/sentinel/log-plans](https://learn.microsoft.com/azure/sentinel/log-plans), retrieved 2026-09-15 for this book), is:
 
-- **Interactive retention**, meaning the data is immediately queryable with no separate search or restore step, for a default period that Microsoft's documentation states as 90 days, extensible per-table up to two years (Microsoft Learn, "Log retention tiers in Microsoft Sentinel," `learn.microsoft.com/azure/sentinel/log-plans`, retrieved 2026-09-15).
+- **Interactive retention**, meaning the data is immediately queryable with no separate search or restore step, for a default period that Microsoft's documentation states as 90 days, extensible per-table up to two years (Microsoft Learn, "Log retention tiers in Microsoft Sentinel," [learn.microsoft.com/azure/sentinel/log-plans](https://learn.microsoft.com/azure/sentinel/log-plans), retrieved 2026-09-15).
 - **No separate per-query charge.** Once a table's data is ingested and sitting in the Analytics tier, running a KQL query against it — however large the query's own scan, however many times an analyst re-runs it while triaging an incident — does not add its own line item the way it does for the Data lake tier's query mechanics (§3). This is the tier's central economic feature: cost is driven by what you ingest and how long you keep it, not by how hard you look at it afterward.
 - **Full feature support.** Analytics rules, UEBA, entity mapping, and every other platform capability described earlier in this book assume an Analytics-tier source table. A table that isn't in the Analytics tier cannot back a scheduled or NRT analytics rule the way Parts 4–5 describe — this is the operational consequence, not just the cost consequence, of the tier choice, and it's the reason §6 below treats tier selection as a detection-design decision.
 
@@ -105,7 +105,7 @@ Independent of which retention tier a table sits in, a workspace as a whole choo
 Two mechanics worth naming explicitly because they change how a Commitment tier decision should be planned, not just priced:
 
 - **Commitment tiers exist at multiple discrete capacity levels**, not as a continuously adjustable dial — a workspace picks a published tier level (Microsoft's documentation lists a defined ladder of GB/day levels above the entry threshold), and moving between levels is a deliberate change, not an automatic adjustment that tracks daily volume.
-- **Changing tier level is constrained, not instantaneous, and the constraint is asymmetric.** Per Microsoft Learn, "Reduce costs for Microsoft Sentinel" (`learn.microsoft.com/azure/sentinel/billing-reduce-costs`, retrieved 2026-09-15): increasing the Commitment tier takes effect immediately but restarts a 31-day commitment period; moving back down to a lower Commitment tier or to pay-as-you-go is only allowed once that 31-day commitment period has finished. A workspace that increases its tier to absorb a short-lived volume spike is committed to that higher rate for the full 31 days regardless of how quickly volume drops back down.
+- **Changing tier level is constrained, not instantaneous, and the constraint is asymmetric.** Per Microsoft Learn, "Reduce costs for Microsoft Sentinel" ([learn.microsoft.com/azure/sentinel/billing-reduce-costs](https://learn.microsoft.com/azure/sentinel/billing-reduce-costs), retrieved 2026-09-15): increasing the Commitment tier takes effect immediately but restarts a 31-day commitment period; moving back down to a lower Commitment tier or to pay-as-you-go is only allowed once that 31-day commitment period has finished. A workspace that increases its tier to absorb a short-lived volume spike is committed to that higher rate for the full 31 days regardless of how quickly volume drops back down.
 
 > **PRODUCT VERSION NOTE (as of 2026-09-15)**
 > The specific Commitment tier capacity levels and their discount percentages relative to
@@ -141,7 +141,7 @@ Some data ingests into a Sentinel-enabled workspace at no charge at all, regardl
 > **PRODUCT VERSION NOTE (as of 2026-09-15)**
 > The authoritative, current free-data-sources list is the "Free data sources" section of
 > Microsoft Learn, "Plan costs and understand pricing and billing" for Microsoft Sentinel
-> (`learn.microsoft.com/azure/sentinel/billing`, retrieved 2026-09-15), and is exactly the kind of
+> ([learn.microsoft.com/azure/sentinel/billing](https://learn.microsoft.com/azure/sentinel/billing), retrieved 2026-09-15), and is exactly the kind of
 > list that gains and loses entries as Microsoft adjusts its own product bundling strategy — this
 > book names three representative categories above with moderate confidence, not a complete or
 > guaranteed-current enumeration. Before assuming any specific connector or table ingests free,

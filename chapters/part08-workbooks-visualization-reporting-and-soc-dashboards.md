@@ -38,7 +38,7 @@ whatever its underlying query happened to compute (§7).
 **[CONCEPT]** Microsoft's own documentation states this directly: "Microsoft Sentinel workbooks
 are based on Azure Monitor workbooks, and add tables and charts with analytics for your logs and
 queries to the tools already available in Azure." (Microsoft Learn, "Visualize your Data by using
-Workbooks in Microsoft Sentinel," `learn.microsoft.com/azure/sentinel/monitor-your-data`,
+Workbooks in Microsoft Sentinel," [learn.microsoft.com/azure/sentinel/monitor-your-data](https://learn.microsoft.com/azure/sentinel/monitor-your-data),
 retrieved 2026-09-15.) Sentinel does not have its own, separate dashboarding engine — every
 Sentinel workbook is an Azure Monitor Workbooks resource that Sentinel's own **Threat management >
 Workbooks** page filters, tags, and presents inside a Sentinel-specific gallery. The same
@@ -108,7 +108,7 @@ Saved, a workbook becomes an ARM resource of type `Microsoft.Insights/workbooks`
 resource type any Azure Monitor Workbook uses, confirmed by the specific permission string
 (`microsoft.insights/workbooks/write`) Microsoft's RBAC documentation names as the write privilege
 a custom role needs to edit and save one (Microsoft Learn, "Azure Workbooks overview,"
-`learn.microsoft.com/azure/azure-monitor/visualize/workbooks-overview`, retrieved 2026-09-15). The
+[learn.microsoft.com/azure/azure-monitor/visualize/workbooks-overview](https://learn.microsoft.com/azure/azure-monitor/visualize/workbooks-overview), retrieved 2026-09-15). The
 sketch below shows that resource's outer shape — not a working template, and not the place to look
 for KQL syntax, which DEH Part 25 already owns.
 
@@ -192,7 +192,7 @@ number does and doesn't prove.
 **[ANALYST]** Sentinel ships a second, non-workbook reporting surface: the **Overview** dashboard,
 a fixed layout of precalculated widgets Microsoft's own documentation walks through section by
 section (Microsoft Learn, "Use the Microsoft Sentinel Overview dashboard to view incidents, data,
-and analytics," `learn.microsoft.com/azure/sentinel/get-visibility`, retrieved 2026-09-15). Unlike
+and analytics," [learn.microsoft.com/azure/sentinel/get-visibility](https://learn.microsoft.com/azure/sentinel/get-visibility), retrieved 2026-09-15). Unlike
 a workbook, its four sections — Incidents, Automation, Data, Analytics — are not editable steps;
 they're a fixed set of rollups Microsoft computes and refreshes on its own schedule, with the last
 refresh time shown per section and a manual **Refresh** available for the whole page. Where you
@@ -290,7 +290,7 @@ with two Power BI options: "Power BI (as an M query)," which exports a query to 
 a dataset directly in the Power BI service — from which reports can be shared, refreshed on a
 schedule, and (with a Power BI Pro or Premium license) refreshed incrementally rather than
 re-pulling the full result set every time (Microsoft Learn, "Log Analytics integration with Power
-BI," `learn.microsoft.com/azure/azure-monitor/logs/log-powerbi`, retrieved 2026-09-15). This is a
+BI," [learn.microsoft.com/azure/azure-monitor/logs/log-powerbi](https://learn.microsoft.com/azure/azure-monitor/logs/log-powerbi), retrieved 2026-09-15). This is a
 genuinely different tool with a genuinely different job: a workbook is a live, interactive, ad hoc
 canvas an analyst edits and re-queries in the moment; a Power BI report built this way is a
 scheduled, distributable artifact for stakeholders who never touch the Sentinel portal at all. A
@@ -312,7 +312,7 @@ broader Sentinel permission set:
 | `Workbook Contributor` | Not a Sentinel role — an Azure Monitor role granting `microsoft.insights/workbooks/write`; layered on top of whichever Sentinel role a user already holds |
 
 (Microsoft Learn, "Roles and permissions in the Microsoft Sentinel platform,"
-`learn.microsoft.com/azure/sentinel/roles`, retrieved 2026-09-15.) The documented task-to-role
+[learn.microsoft.com/azure/sentinel/roles](https://learn.microsoft.com/azure/sentinel/roles), retrieved 2026-09-15.) The documented task-to-role
 mapping on that same page is worth stating precisely rather than paraphrasing: **creating or
 deleting a workbook requires `Microsoft Sentinel Contributor` (or a lesser Sentinel role) *and*
 `Workbook Contributor`** — the two roles are additive, not substitutes for each other. The same page

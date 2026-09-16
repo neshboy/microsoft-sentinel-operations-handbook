@@ -122,7 +122,7 @@ than take from this page alone.
 > part of the Microsoft Sentinel documentation on Microsoft Learn) currently documents a per-rule
 > cap on entity mapping built through the Azure portal's rule wizard — up to 10 entity mappings
 > per rule, each carrying up to three identifier fields (confirmed directly against
-> learn.microsoft.com/azure/sentinel/map-data-fields-to-entities and the "Create scheduled
+> [learn.microsoft.com/azure/sentinel/map-data-fields-to-entities](https://learn.microsoft.com/azure/sentinel/map-data-fields-to-entities) and the "Create scheduled
 > analytics rules" page, current as of this check). This cap has moved before — this book's
 > earlier drafts recorded a five-mapping limit — so treat "10 entities, three identifiers each"
 > as current-as-checked rather than permanent, and re-confirm against the live rule wizard or the

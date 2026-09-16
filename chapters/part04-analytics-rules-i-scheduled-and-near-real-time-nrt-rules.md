@@ -72,7 +72,10 @@ the acceptable short form after this first full mention in this section.
 
 The General step fixes the rule's identity independent of its query: a display name and
 description, a severity (`Informational`/`Low`/`Medium`/`High`), a status (enabled or disabled at
-creation), and one or more MITRE ATT&CK tactics and techniques the rule maps to. This mapping is
+creation), and one or more MITRE ATT&CK tactics and techniques the rule maps to — technique
+identifiers drawn from MITRE's own vendor-neutral knowledge base of adversary tactics and
+techniques, not a Sentinel-specific taxonomy Microsoft invented for this wizard (MITRE, "MITRE
+ATT&CK®," [attack.mitre.org](https://attack.mitre.org/), retrieved 2026-09-16). This mapping is
 not decorative — it is the field that later populates an incident's own tactic/technique display
 in the unified queue, and the field a coverage exercise (DEH Part 41) reads to answer "which
 techniques does this workspace actually have a rule for."
@@ -99,8 +102,8 @@ that decide how that query becomes an alert:
 > **PRODUCT VERSION NOTE (as of 2026-09-15)**
 > Microsoft's documentation for creating a scheduled analytics rule states a run-frequency range
 > from 5 minutes up to 14 days, with the lookback period independently configurable up to the same
-> 14-day ceiling — see Microsoft Learn, "Create custom analytics rules to detect threats" (part of
-> the Microsoft Sentinel documentation set under `learn.microsoft.com/azure/sentinel/`). Treat the
+> 14-day ceiling — see Microsoft Learn, "Create scheduled analytics rules in Microsoft Sentinel"
+> ([learn.microsoft.com/azure/sentinel/create-analytics-rules](https://learn.microsoft.com/azure/sentinel/create-analytics-rules)), retrieved 2026-09-16. Treat the
 > exact numbers as the specific fact to re-check: Microsoft has adjusted rule-wizard bounds and
 > defaults before, and a value this book states as a hard ceiling is exactly the kind of detail
 > that page will show as current if this one has drifted.

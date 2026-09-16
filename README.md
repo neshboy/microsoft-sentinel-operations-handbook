@@ -40,6 +40,7 @@ python add_watermark.py
 
 ## Repository layout
 
+- `REFERENCES.md` — the consolidated, full-metadata source list for every external citation used across `chapters/` (Microsoft Learn pages, plus MITRE ATT&CK and NIST citations where a claim is a cross-platform concept rather than a Sentinel-specific feature).
 - `chapters/` — the 18 parts, Markdown source of record. `appendices/` is reserved for the 3 appendix bundles named in `BOOK-INDEX.md`'s Appendix Table (Table/Connector/Rule-Type Quick Reference, Cost and Retention Decision Matrix, Cross-Reference Map to DEH); none are drafted yet, so this release's build intentionally covers only the Part Table.
 - `assets/diagrams/` — rendered Mermaid SVGs.
 - `build/` — the build/render/watermark tooling above.
