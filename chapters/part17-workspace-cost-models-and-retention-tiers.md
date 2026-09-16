@@ -4,7 +4,7 @@ part: 17
 author: "author-agent"
 reviewer: "technical-reviewer-agent"
 status: "reviewed"
-last_validated: "2026-09-15"
+last_validated: "2026-09-16"
 depends_on: ["DEH-25", "DEH-43", "Part-2", "Part-3", "Part-10", "Part-16", "Part-18"]
 ---
 
@@ -59,6 +59,28 @@ The **Data lake tier** exists for a different job: holding high-volume, lower-pe
 - **It is not currently structured to drive analytics-rule alerting.** A source landed in the Data lake tier is not available to a scheduled or NRT rule's query the way an Analytics-tier table is — Part 3 already flagged this constraint at the ingestion-decision stage; this part is where it becomes a cost-versus-coverage tradeoff instead of a plumbing fact.
 - **Access happens through a different query surface.** Microsoft's platform-layer documentation describes reaching Data lake tier data through mechanisms built for that tier specifically — KQL jobs and search-job-style asynchronous queries rather than the always-interactive query experience the Analytics tier supports. This is genuinely one of the fastest-moving surfaces in the current model; treat the exact set of supported access methods as something to re-verify against current Microsoft Learn documentation rather than as settled the way this chapter's tier-versus-tier framing is.
 
+One piece of the storage component above is precise enough on Microsoft's current documentation to state as a formula rather than leave as "billed separately": Data lake tier storage is not metered on raw retained volume, but on that volume after Microsoft's own published compression ratio is applied.
+
+```
+BilledStorageGB = RawRetainedGB / 6
+```
+
+- **RawRetainedGB** — the uncompressed volume of data still sitting in the Data lake tier after the Analytics-tier retention window it aged out of has ended.
+- **6** — the compression ratio Microsoft's documentation currently states as a "simple and uniform data compression rate of 6:1" applied to Data lake tier storage.
+- **BilledStorageGB** — the compressed volume Microsoft actually meters for the monthly storage charge (Microsoft's own worked example: 600 GB of raw retained data bills as 100 GB of compressed data — `600 / 6 = 100`).
+
+> **PRODUCT VERSION NOTE (as of 2026-09-16)**
+> The 6:1 ratio above is Microsoft's own currently documented figure for Data lake tier storage
+> billing, per Microsoft Learn, "Plan costs and understand pricing and billing" for Microsoft
+> Sentinel ([learn.microsoft.com/azure/sentinel/billing](https://learn.microsoft.com/azure/sentinel/billing), retrieved 2026-09-16). It is a billing
+> *mechanic* — a fixed ratio Microsoft applies before metering — not a dollar rate, so it likely
+> moves on a slower cadence than a per-GB price, but it is still a Microsoft-chosen constant this
+> book cannot guarantee is permanent. It also does not, by itself, say what a compressed GB costs
+> per month — that per-GB-per-month storage rate is exactly the kind of number this part declines
+> to quote for the same staleness reason given elsewhere in this chapter. Re-verify the ratio itself,
+> not just the price applied to it, against the current page before using this formula for a real
+> budget.
+
 > **Blind Spot**
 > "Cheap to store" and "cheap to use" are not the same property, and the Data lake tier's pricing
 > model separates them on purpose. A hunter who treats a Data lake tier table the way they'd treat
@@ -106,6 +128,35 @@ Two mechanics worth naming explicitly because they change how a Commitment tier 
 
 - **Commitment tiers exist at multiple discrete capacity levels**, not as a continuously adjustable dial — a workspace picks a published tier level (Microsoft's documentation lists a defined ladder of GB/day levels above the entry threshold), and moving between levels is a deliberate change, not an automatic adjustment that tracks daily volume.
 - **Changing tier level is constrained, not instantaneous, and the constraint is asymmetric.** Per Microsoft Learn, "Reduce costs for Microsoft Sentinel" ([learn.microsoft.com/azure/sentinel/billing-reduce-costs](https://learn.microsoft.com/azure/sentinel/billing-reduce-costs), retrieved 2026-09-15): increasing the Commitment tier takes effect immediately but restarts a 31-day commitment period; moving back down to a lower Commitment tier or to pay-as-you-go is only allowed once that 31-day commitment period has finished. A workspace that increases its tier to absorb a short-lived volume spike is committed to that higher rate for the full 31 days regardless of how quickly volume drops back down.
+
+Microsoft's own billing documentation states the discount-and-overage mechanic above precisely enough to write as a formula, without this book needing to guess at a current dollar figure:
+
+```
+EffectiveRate = TierPrice / TierGB
+
+DailyCost = TierPrice + max(0, IngestedGB - TierGB) * EffectiveRate
+```
+
+- **TierPrice** — the fixed price Microsoft publishes for the Commitment tier level a workspace has selected. Not quoted as a number here; see the PRODUCT VERSION NOTE immediately below for why.
+- **TierGB** — the GB/day capacity that Commitment tier level commits to (the published ladder starts at the 100 GB/day entry point named above).
+- **IngestedGB** — the workspace's actual metered ingestion volume for that day.
+- **EffectiveRate** — the discounted per-GB rate the Commitment tier reduces to. Microsoft Learn states this is simply TierPrice divided by TierGB — and it is also the rate any overage above TierGB bills at, rather than a separate, undiscounted pay-as-you-go rate.
+- **DailyCost** — the total Sentinel ingestion charge the workspace incurs for that day under the Commitment tier.
+
+The `max(0, ...)` term is doing the real work: a day where `IngestedGB` stays under `TierGB` still bills the full fixed `TierPrice` — a Commitment tier is a floor, not a metered-only charge — while a day that exceeds `TierGB` adds the excess at `EffectiveRate` as its own line item on the bill, rather than folding it back into the fixed charge or billing it at a different rate.
+
+> **PRODUCT VERSION NOTE (as of 2026-09-16)**
+> The formula above states the *mechanism*, not a dollar amount, and is drawn directly from Microsoft
+> Learn, "Plan costs and understand pricing and billing" for Microsoft Sentinel
+> ([learn.microsoft.com/azure/sentinel/billing](https://learn.microsoft.com/azure/sentinel/billing), retrieved 2026-09-16), which states: "The Effective
+> Per GB Price is simply the Microsoft Sentinel Price divided by the Tier GB per day quantity," and,
+> separately, that when a workspace exceeds its Commitment tier allocation on a given day, the Azure
+> bill shows "one line item for the Commitment tier with its associated fixed cost, and a separate
+> line item for the cost beyond the Commitment tier, billed at the same effective Commitment tier
+> rate." Neither `TierPrice` nor `TierGB` is quoted here as a number, for the same reason the next
+> PRODUCT VERSION NOTE below gives: both are published on Microsoft's pricing page and change on
+> Microsoft's own cadence. Recompute `EffectiveRate` from the current `TierPrice` and `TierGB` on that
+> page rather than reusing a number from an earlier reading of this book.
 
 > **PRODUCT VERSION NOTE (as of 2026-09-15)**
 > The specific Commitment tier capacity levels and their discount percentages relative to
